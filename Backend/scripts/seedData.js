@@ -228,8 +228,10 @@ const seedData = async () => {
       }
     ];
 
-    // Insert all questions
-    await Question.insertMany([...jsQuestions, ...reactQuestions, ...webDevQuestions]);
+    // Insert all questions and get the created documents with IDs
+    const createdJsQuestions = await Question.insertMany(jsQuestions);
+    const createdReactQuestions = await Question.insertMany(reactQuestions);
+    const createdWebDevQuestions = await Question.insertMany(webDevQuestions);
     console.log('❓ Created sample questions');
 
     // Create some sample results
@@ -238,11 +240,11 @@ const seedData = async () => {
         userId: createdUsers[0]._id,
         examId: createdExams[0]._id,
         answers: [
-          { questionId: jsQuestions[0]._id, selectedAnswer: 2, isCorrect: true, marksObtained: 10 },
-          { questionId: jsQuestions[1]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 10 },
-          { questionId: jsQuestions[2]._id, selectedAnswer: 0, isCorrect: true, marksObtained: 10 },
-          { questionId: jsQuestions[3]._id, selectedAnswer: 1, isCorrect: false, marksObtained: 0 },
-          { questionId: jsQuestions[4]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 10 }
+          { questionId: createdJsQuestions[0]._id, selectedAnswer: 2, isCorrect: true, marksObtained: 10 },
+          { questionId: createdJsQuestions[1]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 10 },
+          { questionId: createdJsQuestions[2]._id, selectedAnswer: 0, isCorrect: true, marksObtained: 10 },
+          { questionId: createdJsQuestions[3]._id, selectedAnswer: 1, isCorrect: false, marksObtained: 0 },
+          { questionId: createdJsQuestions[4]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 10 }
         ],
         totalQuestions: 5,
         correctAnswers: 4,
@@ -257,11 +259,11 @@ const seedData = async () => {
         userId: createdUsers[1]._id,
         examId: createdExams[1]._id,
         answers: [
-          { questionId: reactQuestions[0]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 15 },
-          { questionId: reactQuestions[1]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 15 },
-          { questionId: reactQuestions[2]._id, selectedAnswer: 0, isCorrect: true, marksObtained: 15 },
-          { questionId: reactQuestions[3]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 15 },
-          { questionId: reactQuestions[4]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 15 }
+          { questionId: createdReactQuestions[0]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 15 },
+          { questionId: createdReactQuestions[1]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 15 },
+          { questionId: createdReactQuestions[2]._id, selectedAnswer: 0, isCorrect: true, marksObtained: 15 },
+          { questionId: createdReactQuestions[3]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 15 },
+          { questionId: createdReactQuestions[4]._id, selectedAnswer: 1, isCorrect: true, marksObtained: 15 }
         ],
         totalQuestions: 5,
         correctAnswers: 5,

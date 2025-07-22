@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Header } from './components/Layout/Header';
 import { HeroSection } from './components/Hero/HeroSection';
@@ -36,7 +36,7 @@ const AppContent: React.FC = () => {
     if (isAuthenticated) {
       examHook.loadExams();
     }
-  }, [isAuthenticated, examHook]);
+  }, [isAuthenticated]); // Remove examHook.loadExams from dependencies
 
   const handleLogin = () => {
     setCurrentState('dashboard');
@@ -73,9 +73,11 @@ const AppContent: React.FC = () => {
     setExamResult(null);
     examHook.endExam();
     setCurrentState('dashboard');
-    // Reload exams to get fresh data
-    examHook.loadExams();
   };
+
+  const handleRetryLoadExams = useCallback(() => {
+    examHook.loadExams();
+  }, [examHook.loadExams]);
 
   const handleLogout = () => {
     logout();
@@ -137,7 +139,7 @@ const AppContent: React.FC = () => {
               onStartExam={handleStartExam}
               isLoading={examHook.isLoading}
               error={examHook.error}
-              onRetryLoad={() => examHook.loadExams()}
+              onRetryLoad={handleRetryLoadExams}
             />
           </motion.div>
         )}

@@ -42,6 +42,7 @@ export const ExamCard: React.FC<ExamCardProps> = ({ exam, onStart }) => {
   };
 
   const displayDifficulty = exam.difficultyLevel || getDifficultyLabel(exam.totalMarks);
+  const isDemoExam = exam._id.startsWith('demo-');
 
   return (
     <motion.div
@@ -87,14 +88,29 @@ export const ExamCard: React.FC<ExamCardProps> = ({ exam, onStart }) => {
           </div>
         </div>
 
-        <Button 
-          onClick={onStart}
-          className="w-full group"
-          variant="primary"
-        >
-          <Play className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-          Start Exam
-        </Button>
+        {isDemoExam ? (
+          <div className="w-full">
+            <Button 
+              className="w-full opacity-50 cursor-not-allowed"
+              variant="secondary"
+              disabled
+            >
+              <span className="text-sm">Demo Exam - Server Required</span>
+            </Button>
+            <p className="text-xs text-gray-400 mt-2 text-center">
+              Backend server needed for exam functionality
+            </p>
+          </div>
+        ) : (
+          <Button 
+            onClick={onStart}
+            className="w-full group"
+            variant="primary"
+          >
+            <Play className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+            Start Exam
+          </Button>
+        )}
       </GlassCard>
     </motion.div>
   );

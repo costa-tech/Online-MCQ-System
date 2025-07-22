@@ -124,11 +124,11 @@ export const startExam = async (req, res, next) => {
       return errorResponse(res, 'Exam not found', 404);
     }
 
-    // Check if user has already taken this exam (optional - remove if retakes are allowed)
-    const existingResult = await Result.findOne({ userId, examId: id });
-    if (existingResult) {
-      return errorResponse(res, 'You have already taken this exam', 400);
-    }
+    // Check if user has already taken this exam (commented out for testing)
+    // const existingResult = await Result.findOne({ userId, examId: id });
+    // if (existingResult) {
+    //   return errorResponse(res, 'You have already taken this exam', 400);
+    // }
 
     // Get questions for the exam
     const questions = await Question.find({ examId: id, isActive: true })

@@ -50,9 +50,9 @@ const AppContent: React.FC = () => {
   };
 
   const handleExamSubmit = async (
-    examId: string, 
+    _examId: string, 
     answers: Array<{ questionId: string; selectedAnswer: number; timeTaken?: number }>, 
-    timeTaken: number
+    _timeTaken: number
   ): Promise<ResultSummary | null> => {
     // Convert the answers format to what the hook expects
     const formattedAnswers = answers.map(answer => ({
@@ -74,6 +74,11 @@ const AppContent: React.FC = () => {
     examHook.endExam();
     setCurrentState('dashboard');
   };
+
+  // Create callback to trigger stats updates
+  const handleStatsUpdate = useCallback(() => {
+    // This function can be used to trigger updates in child components
+  }, []);
 
   const handleRetryLoadExams = useCallback(() => {
     examHook.loadExams();
@@ -140,6 +145,7 @@ const AppContent: React.FC = () => {
               isLoading={examHook.isLoading}
               error={examHook.error}
               onRetryLoad={handleRetryLoadExams}
+              onStatsUpdate={handleStatsUpdate}
             />
           </motion.div>
         )}
